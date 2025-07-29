@@ -1,9 +1,16 @@
+"use client";
 import Link from "next/link";
-import { Search, ShoppingCart } from "lucide-react";
+import { Search, ShoppingCart, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useSession, signOut } from "next-auth/react";
 export default function Header() {
+  const { data: session, status } = useSession();
+
+  const handleSignOut = () => {
+    signOut({ callbackUrl: "/login" });
+  };
   return (
     <header className="border-b">
       <div className="container mx-auto px-20 py-4">
@@ -30,12 +37,27 @@ export default function Header() {
                 </Badge>
               </Button>
             </Link>
-            <Link href="/signup">
-              <Button variant="ghost">Kayıt Ol</Button>
-            </Link>
-            <Link href="/login">
-              <Button>Giriş</Button>
-            </Link>
+            {session ? (
+              <div className="flex items-center space-x-2">
+                <Link href="/profile">
+                  <Button variant="ghost">
+                    <User className="h-5 w-5 mr-2" />
+                    {session.user?.name || "Profil"}
+                  </Button>
+                </Link>
+
+                <Button onClick={handleSignOut}>Çıkış Yap</Button>
+              </div>
+            ) : (
+              <div className="space-x-2">
+                <Link href="/signup">
+                  <Button variant="ghost">Kayıt Ol</Button>
+                </Link>
+                <Link href="/login">
+                  <Button>Giriş</Button>
+                </Link>
+              </div>
+            )}
           </nav>
         </div>
       </div>
