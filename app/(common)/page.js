@@ -1,8 +1,15 @@
-import { Button } from "@/components/ui/button";
+import Categories from "./components/home/categories";
+import FeaturedProducts from "./components/home/featured";
+import Hero from "./components/home/hero";
+import Properties from "./components/home/properties";
+
 export default function Home() {
   return (
-    <div>
-      <Button>Merhaba</Button>
+    <div className="container mx-auto">
+      <Hero />
+      <Categories />
+      <FeaturedProducts />
+      <Properties />
     </div>
   );
 }
