@@ -5,6 +5,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useSession, signOut } from "next-auth/react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 export default function Header() {
   const { data: session, status } = useSession();
 
@@ -45,8 +56,25 @@ export default function Header() {
                     {session.user?.name || "Profil"}
                   </Button>
                 </Link>
-
-                <Button onClick={handleSignOut}>Çıkış Yap</Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button>Çıkış Yap</Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Çıkış Yap</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Çıkış yapmak istediğinize emin misiniz?
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>İptal</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleSignOut}>
+                        Çıkş Yap
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             ) : (
               <div className="space-x-2">

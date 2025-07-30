@@ -37,6 +37,7 @@ export default function LoginPage() {
       });
       if (result?.error) {
         setError("Geçersiz email veya şifre");
+        setIsLoading(false);
       } else {
         const session = await getSession();
         console.log(session.user);
