@@ -5,7 +5,14 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   try {
     const { name, email, password } = await request.json();
-
+    if (!name || !email || !password) {
+      return NextResponse.json(
+        {
+          error: "Tüm alanları doldurun!",
+        },
+        { status: 400 }
+      );
+    }
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const result = await pool.query(
