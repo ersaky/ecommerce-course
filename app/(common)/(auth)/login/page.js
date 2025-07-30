@@ -68,7 +68,7 @@ export default function LoginPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Giriş Yap</CardTitle>
+            <CardTitle className="text-2xl">Giriş Yap</CardTitle>
             <CardDescription>
               E-posta adresiniz ve şifrenizle giriş yapın
             </CardDescription>
