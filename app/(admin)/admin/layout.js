@@ -27,9 +27,9 @@ export default function AdminLayout({ children }) {
         <Provider>
           <div className="min-h-screen bg-gray-50">
             <SideBar />
-            <div className="pl-32">
+            <div className="pl-64">
               <main className="py-6">
-                <div className="mx-auto max-w-7xl px-8">{children}</div>
+                <div className="mx-auto max-w-screen px-8">{children}</div>
               </main>
             </div>
           </div>
