@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { getCategories, createCategory } from "@/db/category";
-
 // GET - Tüm kategorileri getir
 export async function GET() {
   try {
