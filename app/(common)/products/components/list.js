@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
+import AddToCartButton from "./addCart";
 
 export default function ProductList({ products }) {
   return (
@@ -52,9 +53,7 @@ export default function ProductList({ products }) {
                 </div>
               </div>
               <div className="space-y-4">
-                <Link href="#">
-                  <Button className="w-full">Sepete At</Button>
-                </Link>
+                <AddToCartButton product={product} />
                 <Link href={`/products/${product.id}`}>
                   <Button variant="outline" className="w-full">
                     Detayları Gör

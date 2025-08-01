@@ -20,7 +20,7 @@ export default function FeaturedProducts({ featuredProducts }) {
       </div>
       <div className="grid grid-cols-4 gap-6">
         {featured.map((product) => (
-          <Link key={product.id} href="/products">
+          <Link key={product.id} href={`/products/${product.id}`}>
             <Card className="hover:shadow-lg transition-shadow cursor-pointer py-0 pb-3">
               <div className="relative">
                 <div className="aspect-square bg-gray-200 rounded-t-lg flex items-center justify-center">

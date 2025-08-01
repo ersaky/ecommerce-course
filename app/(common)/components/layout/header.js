@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useSession, signOut } from "next-auth/react";
+import { useCartStore } from "@/store/cartStore";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,7 +20,8 @@ import {
 } from "@/components/ui/alert-dialog";
 export default function Header() {
   const { data: session, status } = useSession();
-
+  const { items } = useCartStore();
+  const totalItems = items.length;
   const handleSignOut = () => {
     signOut({ callbackUrl: "/login" });
   };
@@ -43,9 +46,11 @@ export default function Header() {
             <Link href="/cart">
               <Button variant="ghost" className="relative">
                 <ShoppingCart className="h-5 w-5" />
-                <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-red-600">
-                  3
-                </Badge>
+                {totalItems && totalItems > 0 && (
+                  <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-red-600">
+                    {totalItems}
+                  </Badge>
+                )}
               </Button>
             </Link>
             {session ? (
