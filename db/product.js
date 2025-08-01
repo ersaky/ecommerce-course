@@ -87,3 +87,82 @@ export async function deleteProduct(id) {
     throw error;
   }
 }
+
+export async function getFilteredProducts(filters = {}) {
+  try {
+    const {
+      category,
+      search,
+      sortBy = "created_at",
+      sortOrder = "desc",
+    } = filters;
+
+    let query = `
+            SELECT p.*, c.name as category_name 
+            FROM products p 
+            LEFT JOIN categories c ON p.category_id = c.id
+        `;
+
+    const conditions = [];
+    const values = [];
+    let paramCount = 0;
+
+    // Kategori filtresi
+    if (category && category !== "Tümü") {
+      paramCount++;
+      conditions.push(`c.name = $${paramCount}`);
+      values.push(category);
+    }
+
+    // Arama filtresi
+    if (search && search.trim()) {
+      paramCount++;
+      conditions.push(
+        `(LOWER(p.name) LIKE $${paramCount} OR LOWER(p.description) LIKE $${paramCount})`
+      );
+      values.push(`%${search.toLowerCase()}%`);
+    }
+
+    // WHERE koşullarını ekle
+    if (conditions.length > 0) {
+      query += ` WHERE ${conditions.join(" AND ")}`;
+    }
+
+    // Sıralama
+    const validSortFields = {
+      name: "p.name",
+      price: "p.price",
+      created_at: "p.created_at",
+    };
+
+    const sortField = validSortFields[sortBy] || "p.created_at";
+    const order = sortOrder.toLowerCase() === "asc" ? "ASC" : "DESC";
+
+    query += ` ORDER BY ${sortField} ${order}`;
+
+    const result = await pool.query(query, values);
+    return result.rows;
+  } catch (error) {
+    console.error("Error getting products:", error);
+    throw error;
+  }
+}
+
+export async function getFeaturedProducts(limit = 4) {
+  try {
+    const result = await pool.query(
+      `SELECT p.*, c.name as category_name 
+             FROM products p 
+             LEFT JOIN categories c ON p.category_id = c.id 
+             WHERE p.stock > 0 AND p.is_featured = true
+             ORDER BY p.created_at DESC
+             LIMIT $1
+             `,
+      [limit]
+    );
+    return result.rows;
+  } catch (error) {
+    console.error("Error getting products:", error);
+    throw error;
+  }
+}

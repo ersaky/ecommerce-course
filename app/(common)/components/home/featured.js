@@ -8,33 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const featured = [
-  {
-    id: 1,
-    name: "Wireless Kulaklık",
-    price: 1299.99,
-    category: "Elektronik",
-  },
-  {
-    id: 2,
-    name: "Wireless Kulaklık",
-    price: 1299.99,
-    category: "Elektronik",
-  },
-  {
-    id: 3,
-    name: "Wireless Kulaklık",
-    price: 1299.99,
-    category: "Elektronik",
-  },
-  {
-    id: 4,
-    name: "Wireless Kulaklık",
-    price: 1299.99,
-    category: "Elektronik",
-  },
-];
-export default function FeaturedProducts() {
+export default function FeaturedProducts({ featuredProducts }) {
+  const featured = featuredProducts;
   return (
     <section className="py-16">
       <div className="flex justify-between items-center mb-12">

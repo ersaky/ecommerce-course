@@ -62,3 +62,20 @@ export async function deleteCategory(id) {
     throw error;
   }
 }
+
+export async function getCategoriesWithProductCount() {
+  try {
+    const result = await pool.query(
+      `SELECT c.*, COUNT(p.id) as product_count
+        FROM categories c
+        LEFT JOIN products p ON c.id = p.category_id
+        GROUP BY c.id
+        HAVING COUNT(p.id) > 0        
+      `
+    );
+    return result.rows;
+  } catch (error) {
+    console.error("Hata : ", error);
+    throw error;
+  }
+}
